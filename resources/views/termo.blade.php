@@ -628,12 +628,17 @@
             }
 
             function apagarLetra() {
+                const cell = obterCelula(tentativaAtual, letraAtual);
+                gridState[tentativaAtual][letraAtual] = '';
+                cell.querySelector('.cell-front').textContent = '';
+                cell.classList.remove('filled');
                 if (letraAtual > 0) {
+
+                    // Volta para a célula anterior
                     letraAtual--;
-                    gridState[tentativaAtual][letraAtual] = '';
-                    const cell = obterCelula(tentativaAtual, letraAtual);
-                    cell.querySelector('.cell-front').textContent = '';
-                    cell.classList.remove('filled');
+                    while (letraAtual >= 0 && gridState[tentativaAtual][letraAtual] === '') {
+                        letraAtual--;
+                    }
 
                     // Atualiza a célula selecionada
                     atualizarCelulaSelecionada();
