@@ -23,16 +23,9 @@ class DatabaseSeeder extends Seeder
 
         $words = [
             [
-                'word' => 'algaz',
+                'word' => 'coisa',
                 'length' => 5,
-                'definition' => 'algaz',
-                'is_verified' => true,
-                'is_valid' => true
-            ],
-            [
-                'word' => 'causa',
-                'length' => 5,
-                'definition' => 'causa',
+                'definition' => 'Tudo aquilo que existe ou pode ser pensado, sem nome ou classificação específica definida.',
                 'is_verified' => true,
                 'is_valid' => true
             ]

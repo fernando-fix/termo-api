@@ -590,6 +590,8 @@
                 key = key.toUpperCase(); // Garante caixa alta
 
                 if (key === 'BACKSPACE') {
+                    apagarEsquerda();
+                } else if (key === 'DELETE') {
                     apagarLetra();
                 } else if (key === 'ENTER') {
                     await submeterTentativa();
@@ -627,7 +629,7 @@
                 }
             }
 
-            function apagarLetra() {
+            function apagarEsquerda() {
                 const cell = obterCelula(tentativaAtual, letraAtual);
                 if (cell) {
                     gridState[tentativaAtual][letraAtual] = '';
@@ -640,6 +642,20 @@
                     if (letraAtual < 0) {
                         letraAtual = 0;
                     }
+                    // Atualiza a célula selecionada
+                    atualizarCelulaSelecionada();
+                }
+            }
+
+            function apagarLetra() {
+                const cell = obterCelula(tentativaAtual, letraAtual);
+                if (cell) {
+                    gridState[tentativaAtual][letraAtual] = '';
+                    const front = cell.querySelector('.cell-front');
+                    if (front) {
+                        front.textContent = '';
+                    }
+                    cell.classList.remove('filled');
                     // Atualiza a célula selecionada
                     atualizarCelulaSelecionada();
                 }
