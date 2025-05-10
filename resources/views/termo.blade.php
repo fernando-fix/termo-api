@@ -53,7 +53,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            min-height: 100vh;
+            min-height: 100dvh;
             margin: 0;
             padding: 10px;
             box-sizing: border-box;
