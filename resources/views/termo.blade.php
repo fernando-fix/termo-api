@@ -422,7 +422,7 @@
             let palavrasUsadas = new Set(); // Histórico de palavras já usadas
             let palavraSecreta = '';
             let tentativaAtual = 0;
-            let letraAtual = 0;
+            let letraAtual = 1;
             let gridState = [];
             let jogoTerminou = false;
 
@@ -629,17 +629,17 @@
 
             function apagarLetra() {
                 const cell = obterCelula(tentativaAtual, letraAtual);
-                gridState[tentativaAtual][letraAtual] = '';
-                cell.querySelector('.cell-front').textContent = '';
-                cell.classList.remove('filled');
-                if (letraAtual > 0) {
-
-                    // Volta para a célula anterior
-                    letraAtual--;
-                    while (letraAtual >= 0 && gridState[tentativaAtual][letraAtual] === '') {
-                        letraAtual--;
+                if (cell) {
+                    gridState[tentativaAtual][letraAtual] = '';
+                    const front = cell.querySelector('.cell-front');
+                    if (front) {
+                        front.textContent = '';
                     }
-
+                    cell.classList.remove('filled');
+                    letraAtual--;
+                    if (letraAtual < 0) {
+                        letraAtual = 0;
+                    }
                     // Atualiza a célula selecionada
                     atualizarCelulaSelecionada();
                 }
@@ -648,11 +648,14 @@
             function atualizarCelulaSelecionada() {
                 // Remove a seleção de todas as células
                 document.querySelectorAll('.grid-cell').forEach(c => c.classList.remove('selected'));
-
                 // Se a posição atual é válida, seleciona a célula
                 if (letraAtual < TAMANHO_PALAVRA) {
                     const cell = obterCelula(tentativaAtual, letraAtual);
-                    cell.classList.add('selected');
+                    cell?.classList.add('selected');
+                } else if (letraAtual === TAMANHO_PALAVRA) {
+                    const cell = obterCelula(tentativaAtual, TAMANHO_PALAVRA - 1);
+                    cell?.classList.add('selected');
+                    letraAtual = TAMANHO_PALAVRA - 1;
                 }
             }
 
@@ -677,7 +680,9 @@
             }
 
             async function submeterTentativa() {
-                if (letraAtual !== TAMANHO_PALAVRA) {
+                // Verifica se todas as células estão preenchidas
+                const todasPreenchidas = gridState[tentativaAtual].every(letra => letra !== '');
+                if (!todasPreenchidas) {
                     mostrarMensagem("Letras insuficientes!");
                     agitarLinha(tentativaAtual);
                     return;
