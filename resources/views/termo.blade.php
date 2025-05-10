@@ -452,7 +452,7 @@
             async function buscarPalavraRandom() {
                 try {
                     mostrarLoader(true);
-                    const response = await fetch('http://localhost:8000/api/palavra-aleatoria');
+                    const response = await fetch('https://termo-api.cursaweb.com.br/api/palavra-aleatoria');
                     const data = await response.json();
                     return normalizarTexto(data.data.palavra);
                 } catch (error) {
@@ -680,7 +680,7 @@
                     mostrarLoader(true);
                     const palavraNormalizada = normalizarTexto(palavra);
                     const response = await fetch(
-                        `http://localhost:8000/api/verificar-palavra?palavra=${palavraNormalizada}`);
+                        `https://termo-api.cursaweb.com.br/api/verificar-palavra?palavra=${palavraNormalizada}`);
                     const data = await response.json();
                     if (!response.ok) {
                         console.error('Erro ao verificar palavra:', response.status, data.message);
