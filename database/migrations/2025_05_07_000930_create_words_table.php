@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('word');
             $table->integer('length');
-            $table->text('definition');
+            $table->text('definition')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_valid')->default(false);
             $table->timestamps();
